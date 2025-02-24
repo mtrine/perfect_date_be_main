@@ -7,7 +7,6 @@ import { ErrorCode } from 'src/enums/error-code.enum';
 import { CustomException } from 'src/exception-handle/custom-exception';
 import { UploadService } from '../upload/upload.service';
 import { UtilsService } from 'src/utils/utils.service';
-import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class PostService {
