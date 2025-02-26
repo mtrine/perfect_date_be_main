@@ -3,7 +3,19 @@ import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 export class GetAiMessageDto {
     @IsNotEmpty()
     @IsString()
-    prompt:string;
+    yourAddress: string;
+
+    @IsNotEmpty()
+    @IsString()
+    distance: string;
+
+    @IsNotEmpty()
+    @IsString()
+    style:string;
+
+    @IsOptional()
+    @IsString()
+    note:string;
 
     @IsOptional()
     @IsString()
