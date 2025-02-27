@@ -43,7 +43,6 @@ export class GeminiService {
         try {
             const prompt = `Nơi ở : ${dto.distance}; khoảng mong muốn từ nơi ở đến địa điểm đi chơi : ${dto.distance}; phong cách: ${dto.style}; ghi chú : ${dto.note} (nếu có), hãy cho tôi 5 địa điểm đi chơi cụ thể từ yêu cầu, dùng google map để định vị trí cụ thể . Trả lời theo dang sách theo mẫu,  không được thêm bớt chữ nào: Những địa điểm hẹn hò chúng tớ tìm được theo yêu câu của bạn là: 1. .... : địa chỉ chi tiết, hoạt động`
             const { sessionId, chatSession } = this.getChatSession(dto.sessionId);
-            console.log('prompt', prompt);
             const result = await chatSession.sendMessage(prompt);
             return {
                 sessionId,
@@ -51,7 +50,6 @@ export class GeminiService {
             }
         } catch (error) {
             this.logger.error(`Error generating text: ${error.message}`);
-
         }
     }
 }

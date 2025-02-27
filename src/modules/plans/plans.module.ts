@@ -5,8 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Plan, PlanSchema } from './schemas/plan.schemas';
 import { PlansRepository } from './plans.repo';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { User, UserSchema } from '../user/schemas/user.schema';
 import { UserModule } from '../user/user.module';
+import { CacheHandleModule } from '../cache-handle/cache-handle.module';
 
 @Module({
   imports: [
@@ -17,7 +17,8 @@ import { UserModule } from '../user/user.module';
       },
     ]),
     NotificationsModule,
-    UserModule
+    UserModule,
+    CacheHandleModule
   ],
   controllers: [PlansController],
   providers: [PlansService, PlansRepository],

@@ -7,26 +7,36 @@ import { UtilsService } from 'src/utils/utils.service';
 import { UploadService } from '../upload/upload.service';
 import { ErrorCode } from 'src/enums/error-code.enum';
 import { CustomException } from 'src/exception-handle/custom-exception';
+import { CacheHandleService } from '../cache-handle/cache-handle.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private userRepository: UserRepository,
     private uploadService: UploadService,
+    private cacheHandleService: CacheHandleService
   ) { }
 
   async createUser(dto: CreateUserDto) {
+   
     const user = await this.userRepository.createUser(dto);
     return user;
   }
 
   async findById(id: string) {
+    const key = `user_${id}`;
+    const cacheData = await this.cacheHandleService.getCache(key);
+    if (cacheData) {
+      return cacheData;
+    }
     const user = await this.userRepository.findById(id);
+    await this.cacheHandleService.setCache(`user_${id}`, user);
     return user;
   }
 
   async addPartner(userId: string, partnerCode: string) {
     const user = await this.userRepository.addPartner(userId, partnerCode);
+    await this.cacheHandleService.delCache(`user_${userId}`);
     return user;
   }
 
@@ -55,6 +65,7 @@ export class UserService {
     }
     const objectAfterRemove = UtilsService.removeUndefinedAndNull(updateUserDto) as UpdateUserDto;
     const userUpdate = await this.userRepository.updateUser(userId, objectAfterRemove);
+    await this.cacheHandleService.delCache(`user_${userId}`);
     return userUpdate;
   }
 

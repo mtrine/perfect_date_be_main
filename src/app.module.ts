@@ -17,8 +17,11 @@ import { GeminiModule } from './modules/gemini/gemini.module';
 import { PostModule } from './modules/post/post.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { ReportSupportModule } from './modules/report-support/report-support.module';
-
-
+import { CacheModule } from '@nestjs/cache-manager';
+import { createKeyv } from '@keyv/redis';
+import { Keyv } from 'keyv';
+import { CacheableMemory } from 'cacheable';
+import { CacheHandleModule } from './modules/cache-handle/cache-handle.module';
 @Module({
   imports: [
     ConfigModule.forRoot(
@@ -31,13 +34,14 @@ import { ReportSupportModule } from './modules/report-support/report-support.mod
       }),
       inject: [ConfigService],
     }),
-    UserModule, 
-    AuthModule, 
-    RoleModule, 
-    PermissionsModule, 
-    KeyTokenModule, DatabasesModule, PlansModule, ActivitiesModule, NotificationsModule, GeminiModule, PostModule, UploadModule, ReportSupportModule
+   
+    UserModule,
+    AuthModule,
+    RoleModule,
+    PermissionsModule,
+    KeyTokenModule, DatabasesModule, PlansModule, ActivitiesModule, NotificationsModule, GeminiModule, PostModule, UploadModule, ReportSupportModule, CacheHandleModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

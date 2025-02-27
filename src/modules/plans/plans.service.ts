@@ -7,13 +7,15 @@ import { ErrorCode } from 'src/enums/error-code.enum';
 import { NotificationsService } from '../notifications/notifications.service';
 import { UserRepository } from '../user/user.repo';
 import { NotificationType } from 'src/enums/notification-type';
+import { CacheHandleService } from '../cache-handle/cache-handle.service';
 
 @Injectable()
 export class PlansService {
   constructor(
     private plansRepository: PlansRepository,
     private notificationService: NotificationsService,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    private cacheHandleService: CacheHandleService
   ) { }
 
   async create(createPlanDto: CreatePlanDto) {
@@ -47,7 +49,14 @@ export class PlansService {
   }
 
   async getPlanById(planId: string, userId: string) {
-    return await this.plansRepository.getPlanById(planId, userId);
+    const key = `plan_${planId}`;
+    const cacheData = await this.cacheHandleService.getCache(key);
+    if(cacheData) {
+      return cacheData;
+    }
+    const plan = await this.plansRepository.getPlanById(planId, userId);
+    await this.cacheHandleService.setCache(`plan_${planId}`, plan); 
+    return ;
   }
 
 }
