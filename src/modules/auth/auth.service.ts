@@ -55,9 +55,18 @@ export class AuthService {
             maxAge: +ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')),
             sameSite: 'none'
         })
+
+        res.cookie('access_token', accessToken, {
+            httpOnly: true,
+            secure: this.configService.get<string>('NODE_ENV') === 'production' ? true : false,
+            maxAge: +ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')),
+            sameSite: 'none'
+        })
+        
         return {
             user_id: user._id,
-            access_token: accessToken,
+            user_email: user.user_email,
+            user_role: user.user_role,
         };
     }
 
@@ -117,9 +126,18 @@ export class AuthService {
             maxAge: +ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')),
             sameSite: 'none'
         })
+
+        res.cookie('access_token', accessToken, {
+            httpOnly: true,
+            secure: this.configService.get<string>('NODE_ENV') === 'production' ? true : false,
+            maxAge: +ms(this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')),
+            sameSite: 'none'
+        })
+
         return {
             user_id: foundUser._id,
-            access_token: accessToken,
+            user_email: foundUser.user_email,
+            user_role: foundUser.user_role,
         };
     }
 

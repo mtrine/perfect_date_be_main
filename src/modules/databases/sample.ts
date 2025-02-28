@@ -132,6 +132,14 @@ export const INIT_PERMISSIONS = [
         "permission_apiPath": "/api/v1/report-support",
         "permission_method": "GET",
         "permission_module": "REPORT-SUPPORT",
+    },
+    // Gemni permissions
+    {
+        "_id": "648ad750dafdb9754f40b8d4",
+        "permission_name": "Get AI Message",
+        "permission_apiPath": "/api/v1/gemini",
+        "permission_method": "POST",
+        "permission_module": "GEMINI",
     }
 ];
 
@@ -151,5 +159,6 @@ export const USER_PERMISSION_IDS = [
     "648ad750dafdb9754f40b8d5",
     "648ad750dafdb9754f40b8d6",
     "648ad630dafdb9754f40b8a7",
-    "648ad630dafdb9754f40b8a8"
+    "648ad630dafdb9754f40b8a8",
+    "648ad750dafdb9754f40b8d4"
 ];

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Request } from 'express';
 import { access_token_public_key } from '../constants/jwt.constants'
 import { UserRepository } from 'src/modules/user/user.repo';
 import { RoleRepository } from 'src/modules/role/role.repo';
@@ -14,7 +15,11 @@ export class JwtAccessTokenStrategy extends PassportStrategy(Strategy) {
         private readonly roleRepository: RoleRepository,
     ) {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromExtractors([
+                (request: Request) => {
+                    return request?.cookies?.access_token || null;
+                }
+            ]),
             ignoreExpiration: false,
             secretOrKey: access_token_public_key,
         });
