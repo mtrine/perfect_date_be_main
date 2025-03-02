@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtAccessTokenStrategy } from 'src/strategies/jwt-access.strategy';
 import { RoleModule } from '../role/role.module';
 import { LocalStrategy } from 'src/strategies/local.strategy';
+import { GoogleStrategy } from 'src/strategies/google.strategy';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { LocalStrategy } from 'src/strategies/local.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtAccessTokenStrategy, LocalStrategy],
+  providers: [AuthService, JwtAccessTokenStrategy, LocalStrategy,GoogleStrategy],
 })
 export class AuthModule { }

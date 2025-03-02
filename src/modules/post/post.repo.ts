@@ -49,7 +49,7 @@ export class PostRepository {
 
     async getLatestPost(limit: number, skip: number) {
         const post = await this.postModel.find()
-            .populate("createdBy","user_name image user_email -_id")
+            .populate("createdBy","user_name image user_email user_avatar -_id")
             .sort({ createdAt: -1 })
             .limit(limit)
             .skip(skip)

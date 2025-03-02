@@ -6,6 +6,7 @@ import { Public } from 'src/decorators/public.decorator';
 import { Request, Response } from 'express';
 import { ResponseMessage } from 'src/decorators/response-message.decorator';
 import { LocalAuthGuard } from 'src/guards/local.guard';
+import { GoogleAuthGuard } from 'src/guards/google.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -13,12 +14,12 @@ export class AuthController {
 
  
 
-  @Public()
-  @Post("google/login")
-  @ResponseMessage('Login successfully')
-  async googleCallback(@Body("idToken") idToken: string, @Res({ passthrough: true }) res: Response) {
-    return this.authService.verifyGoogleToken(idToken, res);
-  }
+  // @Public()
+  // @Post("google/login")
+  // @ResponseMessage('Login successfully')
+  // async googleCallback(@Body("idToken") idToken: string, @Res({ passthrough: true }) res: Response) {
+  //   return this.authService.verifyGoogleToken(idToken, res);
+  // }
 
   @Get('refresh-token')
   @Public()
@@ -33,6 +34,14 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @ResponseMessage('Login successfully')
   async login(@User() user: UserInterface, @Res({ passthrough: true }) res: Response) {
+    return this.authService.login(user, res);
+  }
+
+  @Public()
+  @Post("google/login")
+  @UseGuards(GoogleAuthGuard)
+  @ResponseMessage('Login successfully')
+  async googleLoginWithAccessToken(@User() user: UserInterface, @Res({ passthrough: true }) res: Response) {
     return this.authService.login(user, res);
   }
 }

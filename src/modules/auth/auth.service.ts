@@ -21,6 +21,7 @@ export class AuthService {
         private readonly keyTokenService: KeyTokenService,
         private readonly configService: ConfigService,
     ) { }
+
     async validateGoogleUser(googleUser: CreateUserDto) {
         const user = await this.userRepository.findByEmail(googleUser.email);
         if (user) return user
@@ -187,27 +188,27 @@ export class AuthService {
         }
     }
 
-    async verifyGoogleToken(idToken: string, res: Response) {
-        const ticket = await this.client.verifyIdToken({
-            idToken,
-            audience: this.configService.get<string>('GG_CLIENT_ID'),
-        });
+    // async verifyGoogleToken(idToken: string, res: Response) {
+    //     const ticket = await this.client.verifyIdToken({
+    //         idToken,
+    //         audience: this.configService.get<string>('GG_CLIENT_ID'),
+    //     });
 
-        const payload = ticket.getPayload();
-        if (!payload) throw new Error("Invalid Token");
-        const verifiedUser = await this.validateGoogleUser({
-            email: payload.email!,
-            avatar: payload.picture!,
-            name: payload.name!,
-            verified: true,
-        })
+    //     const payload = ticket.getPayload();
+    //     if (!payload) throw new Error("Invalid Token");
+    //     const verifiedUser = await this.validateGoogleUser({
+    //         email: payload.email!,
+    //         avatar: payload.picture!,
+    //         name: payload.name!,
+    //         verified: true,
+    //     })
 
-        const user = {
-            _id: verifiedUser._id.toString(),
-            user_email: verifiedUser.user_email,
-            user_role: verifiedUser.user_role,
-        } as UserInterface;
+    //     const user = {
+    //         _id: verifiedUser._id.toString(),
+    //         user_email: verifiedUser.user_email,
+    //         user_role: verifiedUser.user_role,
+    //     } as UserInterface;
 
-        return await this.login(user, res);
-    }
+    //     return await this.login(user, res);
+    // }
 }
