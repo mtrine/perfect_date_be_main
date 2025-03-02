@@ -2,6 +2,7 @@ export class UserInterface {
     _id:string;
     user_email: string;
     user_role: string;
+    user_avatar: string;
 }
 // {
 //     _id: new ObjectId('67a35eb2fedd8f65dcf0ba8a'),

@@ -56,7 +56,7 @@ export class PlansService {
     }
     const plan = await this.plansRepository.getPlanById(planId, userId);
     await this.cacheHandleService.setCache(`plan_${planId}`, plan); 
-    return ;
+    return plan ;
   }
 
 }

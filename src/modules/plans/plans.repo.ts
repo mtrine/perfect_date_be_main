@@ -36,14 +36,15 @@ export class PlansRepository {
 
     async getPlanById(planId: string, userId: string) {
         const plan = await this.planModel.findById(planId)
-            .populate("createdBy", "user_name user_email -_id")
-            .populate("partnerId", "user_name user_email -_id")
+            .populate("createdBy", "user_name user_email _id")
+            .populate("partnerId", "user_name user_email _id")
             .lean();
 
         if (!plan) {
             throw new CustomException(ErrorCode.NOT_FOUND);
         }
 
+        // console.log(plan);
         const isAuthorized = plan.createdBy?._id.toString() === userId ||
             plan.partnerId?._id.toString() === userId ||
             plan.isPublic;
