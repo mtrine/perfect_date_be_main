@@ -17,6 +17,7 @@ export class ErrorCode {
     static readonly CREATE_PLAN_FAILED = new ErrorCode(1414, 'Create plan failed', HttpStatus.BAD_REQUEST)
     static readonly ALREADY_PARTNER = new ErrorCode(1416, 'Already partner', HttpStatus.BAD_REQUEST)
     static readonly PARTNER_NOT_FOUND = new ErrorCode(1417, 'Partner not found', HttpStatus.BAD_REQUEST)
+    static readonly DUPLICATE_REQUEST = new ErrorCode(1418, 'Duplicate request', HttpStatus.BAD_REQUEST)
      constructor(public readonly code: number, public readonly message: string, public readonly status: HttpStatus) { }
 
     toJSON() {

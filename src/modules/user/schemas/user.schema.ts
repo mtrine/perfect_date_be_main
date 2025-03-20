@@ -23,9 +23,9 @@ export class User {
     @Prop({ default: false })
     user_verified: boolean;
 
-    @Prop({ 
-        default: null ,
-        type:mongoose.Schema.Types.ObjectId,
+    @Prop({
+        default: null,
+        type: mongoose.Schema.Types.ObjectId,
         ref: User.name
     })
     your_partner: Types.ObjectId
@@ -43,6 +43,9 @@ export class User {
 
     @Prop({ required: true, ref: 'Role', default: USER_ROLE })
     user_role: string;
+
+    @Prop({ default: [], type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
+    pending_partner_requests: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -31,13 +31,19 @@ export class UserRepository {
     }
 
     async findById(id: string) {
-        return this.userModel.findById(id).lean();
+        return this.userModel.findById(id)
+        .populate('your_partner','user_name user_avatar _id')
+        .lean();
     }
 
     async findManyUserByIds(ids: string[]) {
         return this.userModel.find({ _id: { $in: ids } }).lean();
     }
 
+    async findByCode(code: string) {
+        return this.userModel.findOne
+            ({ user_code: code }).lean();
+    }
     private generateInviteCode(): string {
         return randomBytes(3).toString('hex').toUpperCase(); // VD: "A1B2C3"
     }
@@ -65,17 +71,25 @@ export class UserRepository {
 
     async getPartner(userId: string) {
         const user = await this.userModel.findById(userId).populate('your_partner')
-        .select('your_partner')
-        .lean();
+            .select('your_partner')
+            .lean();
         return user;
     }
 
     async updateUser(userId: string, updateUserDto: UpdateUserDto) {
-        return this.userModel.findByIdAndUpdate(userId,{
+        return this.userModel.findByIdAndUpdate(userId, {
             ...updateUserDto,
             user_name: updateUserDto.name,
             user_avatar: updateUserDto.avatar,
         }, { new: true });
     }
 
+    async update(userId: string, query: any) {
+        return this.userModel.findOneAndUpdate({ _id: userId }, query, { new: true });
+    }
+
+    async getPenddingPartnerRequests(userId: string) {
+        const user = await this.userModel.findById(userId).populate('pending_partner_requests').select('pending_partner_requests').lean();
+        return user;
+    }
 }

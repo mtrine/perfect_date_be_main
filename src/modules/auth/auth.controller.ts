@@ -12,7 +12,7 @@ import { GoogleAuthGuard } from 'src/guards/google.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
- 
+
 
   // @Public()
   // @Post("google/login")
@@ -43,5 +43,12 @@ export class AuthController {
   @ResponseMessage('Login successfully')
   async googleLoginWithAccessToken(@User() user: UserInterface, @Res({ passthrough: true }) res: Response) {
     return this.authService.login(user, res);
+  }
+
+  @Post('logout')
+  @ResponseMessage('Logout successfully')
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies['refresh_token'];
+    return this.authService.logout(refreshToken, res);
   }
 }

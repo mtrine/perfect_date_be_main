@@ -14,7 +14,6 @@ import { OAuth2Client } from 'google-auth-library';
 
 @Injectable()
 export class AuthService {
-    private client = new OAuth2Client(`${this.configService.get<string>('GG_CLIENT_ID')}`);
     constructor(
         private readonly userRepository: UserRepository,
         private readonly jwtService: JwtService,
@@ -164,30 +163,41 @@ export class AuthService {
         });
     }
 
-    async getUserIfRefreshTokenMatched(
-        user_id: string,
-        refresh_token: string,
-    ) {
-        try {
-            const user = await this.userRepository.findById(user_id);
-            if (!user) {
-                throw new UnauthorizedException();
-            }
-            const refresh_token_user = this.keyTokenService.queryKeyToken({
-                userId: user_id,
-                $in: { refreshToken: refresh_token }
-            });
 
+    async logout(refreshToken: string, res: Response) {
+        // Remove the refresh token from the database
+        await this.keyTokenService.deleteByRefreshToken(refreshToken);
 
-            if (!refresh_token_user) {
-                throw new UnauthorizedException();
-            }
+        // Clear the cookies
+        res.clearCookie('refresh_token');
+        res.clearCookie('access_token');
 
-            return user;
-        } catch (error) {
-            throw error;
-        }
+        return { message: 'Logout successful' };
     }
+    // async getUserIfRefreshTokenMatched(
+    //     user_id: string,
+    //     refresh_token: string,
+    // ) {
+    //     try {
+    //         const user = await this.userRepository.findById(user_id);
+    //         if (!user) {
+    //             throw new UnauthorizedException();
+    //         }
+    //         const refresh_token_user = this.keyTokenService.queryKeyToken({
+    //             userId: user_id,
+    //             $in: { refreshToken: refresh_token }
+    //         });
+
+
+    //         if (!refresh_token_user) {
+    //             throw new UnauthorizedException();
+    //         }
+
+    //         return user;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
 
     // async verifyGoogleToken(idToken: string, res: Response) {
     //     const ticket = await this.client.verifyIdToken({

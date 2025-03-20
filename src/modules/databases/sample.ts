@@ -18,13 +18,6 @@ export const INIT_PERMISSIONS = [
         "permission_module": "USERS",
     },
     {
-        "_id": "648ab6e7fa16b294212e4039",
-        "permission_name": "Add Partner",
-        "permission_apiPath": "/api/v1/users/add-partner",
-        "permission_method": "PATCH",
-        "permission_module": "USERS",
-    },
-    {
         "_id": "648ab6e7fa16b294212e4040",
         "permission_name": "Get Partner",
         "permission_apiPath": "/api/v1/users/partner",
@@ -42,6 +35,34 @@ export const INIT_PERMISSIONS = [
         "_id": "648ab6e7fa16b294212e4042",
         "permission_name": "Get My Info",
         "permission_apiPath": "/api/v1/users/get-my-info",
+        "permission_method": "GET",
+        "permission_module": "USERS",
+    },
+    {
+        "_id": "650000000000000000000001",
+        "permission_name": "Request Partner",
+        "permission_apiPath": "/api/v1/users/request-partner",
+        "permission_method": "POST",
+        "permission_module": "USERS",
+    },
+    {
+        "_id": "650000000000000000000002",
+        "permission_name": "Accept Partner",
+        "permission_apiPath": "/api/v1/users/accept-partner",
+        "permission_method": "POST",
+        "permission_module": "USERS",
+    },
+    {
+        "_id": "650000000000000000000003",
+        "permission_name": "Reject Partner",
+        "permission_apiPath": "/api/v1/users/reject-partner",
+        "permission_method": "POST",
+        "permission_module": "USERS",
+    },
+    {
+        "_id": "650000000000000000000004",
+        "permission_name": "GET Pedding Partner",
+        "permission_apiPath": "/api/v1/users/get-pedding-partner",
         "permission_method": "GET",
         "permission_module": "USERS",
     },
@@ -120,13 +141,6 @@ export const INIT_PERMISSIONS = [
     },
     // Report Support permissions
     {
-        "_id": "648ad750dafdb9754f40b8d2",
-        "permission_name": "Create Report Support",
-        "permission_apiPath": "/api/v1/report-support",
-        "permission_method": "POST",
-        "permission_module": "REPORT-SUPPORT",
-    },
-    {
         "_id": "648ad750dafdb9754f40b8d3",
         "permission_name": "Get Popular Posts",
         "permission_apiPath": "/api/v1/report-support",
@@ -160,5 +174,9 @@ export const USER_PERMISSION_IDS = [
     "648ad750dafdb9754f40b8d6",
     "648ad630dafdb9754f40b8a7",
     "648ad630dafdb9754f40b8a8",
-    "648ad750dafdb9754f40b8d4"
+    "648ad750dafdb9754f40b8d4",
+    "650000000000000000000001",
+    "650000000000000000000002",
+    "650000000000000000000003",
+    "650000000000000000000004",
 ];

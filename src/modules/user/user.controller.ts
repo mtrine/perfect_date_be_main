@@ -23,13 +23,22 @@ export class UserController {
     return this.userService.findById(id);
   }
 
-  @Patch("add-partner")
-  @ResponseMessage('Partner added')
-  async addPartner(
-    @User() user: UserInterface,
-    @Body("partnerCode") partnerCode: string
-  ) {
-    return this.userService.addPartner(user._id, partnerCode);
+  @Post('request-partner')
+  @ResponseMessage('Partner request sent')
+  async requestPartner(@User() user: UserInterface, @Body('partnerCode') partnerCode: string) {
+    return this.userService.requestPartner(user._id, partnerCode);
+  }
+
+  @Post('accept-partner')
+  @ResponseMessage('Partner accepted')
+  async acceptPartner(@User() user: UserInterface, @Body('partnerId') partnerId: string) {
+    return this.userService.acceptPartner(user._id, partnerId);
+  }
+
+  @Post('reject-partner')
+  @ResponseMessage('Partner rejected')
+  async rejectPartner(@User() user: UserInterface, @Body('partnerId') partnerId: string) {
+    return this.userService.rejectPartner(user._id, partnerId);
   }
 
   @Get("partner")
@@ -49,5 +58,11 @@ export class UserController {
   @ResponseMessage('User info found')
   async getMyInfo(@User() user: UserInterface) {
     return this.userService.findById(user._id);
+  }
+
+  @Get("get-pedding-partner")
+  @ResponseMessage('Pending partner found')
+  async getPeddingPartner(@User() user: UserInterface) {
+    return this.userService.getPenddingPartnerRequests(user._id);
   }
 }
